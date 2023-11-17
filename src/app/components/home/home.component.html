@@ -15,25 +15,25 @@
                   class="form-control w-10"
                   id="inputNombre"
                   placeholder="Nombre"
-                  formControlName="nombre"
+                  formControlName="fullname"
                   [ngClass]="{
                     'is-invalid':
-                      form.get('nombre')?.invalid && form.get('nombre')?.touched
+                      form.get('fullname')?.invalid && form.get('fullname')?.touched
                   }"
                 />
               </div>
               <div class="form-group col-md-6">
                 <label for="inputIdentificacion">Identificación</label>
                 <input
-                  type="text"
+                  type="number"
                   class="form-control"
                   id="inputIdentificacion"
                   placeholder="Identificación"
-                  formControlName="identificacion"
+                  formControlName="identificationcard"
                   [ngClass]="{
                     'is-invalid':
-                      form.get('identificacion')?.invalid &&
-                      form.get('identificacion')?.touched
+                      form.get('identificationcard')?.invalid &&
+                      form.get('identificationcard')?.touched
                   }"
                 />
               </div>
@@ -74,7 +74,7 @@
                   }"
                 >
                   <option value="no">No</option>
-                  <option value="premenopause">Premenopausia</option>
+                  <option value="premeno">Premenopausia</option>
                   <option value="it4">IT4</option>
                   <option value="ge40">GE40</option>
                 </select>
@@ -138,15 +138,15 @@
 
             <div class="form-row d-flex align-items-center">
               <div class="form-group col-md-6">
-                <label for="nodescaps">Tapas de Nodos</label>
+                <label for="nodecaps">Tapas de Nodos</label>
                 <select
                   class="form-control"
-                  id="nodescaps"
-                  formControlName="nodescaps"
+                  id="nodecaps"
+                  formControlName="nodecaps"
                   [ngClass]="{
                     'is-invalid':
-                      form.get('nodescaps')?.invalid &&
-                      form.get('nodescaps')?.touched
+                      form.get('nodecaps')?.invalid &&
+                      form.get('nodecaps')?.touched
                   }"
                 >
                   <option value="yes">Sí</option>

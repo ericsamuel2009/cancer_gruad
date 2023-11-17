@@ -36,13 +36,13 @@ export class HomeComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,  private apiService: RestService) {
     this.form = this.formBuilder.group({
-      nombre: ['', Validators.required],
-      identificacion: ['', Validators.required],
+      fullname: ['', Validators.required],
+      identificationcard: [null, Validators.required],
       age: ['', Validators.required],
       menopause: ['', Validators.required],
       tumorSize: ['', Validators.required],
       invNodes: ['', Validators.required],
-      nodescaps: ['', Validators.required],
+      nodecaps: ['', Validators.required],
       degMalig: ['', Validators.required],
       breast: ['', Validators.required],
       breastQuad: ['', Validators.required],
@@ -55,13 +55,13 @@ export class HomeComponent implements OnInit {
     
     if (this.form.valid) {
     const newJson = {
-      nombre: this.form.value.nombre,
-      identificacion: this.form.value.identificacion,
+      fullname: this.form.value.fullname,
+      identificationcard: this.form.value.identificationcard,
       age: this.age, 
       menopause: this.form.value.menopause,
       tumorSize: this.tumorSize, 
       invNodes: this.invNodes, 
-      nodescaps:  this.form.value.nodescaps,
+      nodecaps:  this.form.value.nodecaps,
       degMalig:  this.form.value.degMalig,
       breast:  this.form.value.breast,
       breastQuad:  this.form.value.breastQuad,
