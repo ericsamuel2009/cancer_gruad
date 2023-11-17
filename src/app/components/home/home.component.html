@@ -1,0 +1,302 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="mb-0">Formulario</h2>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="form-row d-flex align-items-center">
+              <div class="form-group col-md-6">
+                <label for="inputNombre">Nombre</label>
+                <input
+                  type="text"
+                  class="form-control w-10"
+                  id="inputNombre"
+                  placeholder="Nombre"
+                  formControlName="nombre"
+                  [ngClass]="{
+                    'is-invalid':
+                      form.get('nombre')?.invalid && form.get('nombre')?.touched
+                  }"
+                />
+              </div>
+              <div class="form-group col-md-6">
+                <label for="inputIdentificacion">Identificación</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="inputIdentificacion"
+                  placeholder="Identificación"
+                  formControlName="identificacion"
+                  [ngClass]="{
+                    'is-invalid':
+                      form.get('identificacion')?.invalid &&
+                      form.get('identificacion')?.touched
+                  }"
+                />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="rangoEdad"
+                    >Selecciona tu Rango de Edad:
+                    <strong> {{ age }}</strong></label
+                  >
+                  <input
+                    type="range"
+                    class="form-control"
+                    id="rangoEdad"
+                    min="10"
+                    max="90"
+                    formControlName="age"
+                    (input)="actualizarRangoEdad($event)"
+                    [ngClass]="{
+                      'is-invalid':
+                        form.get('age')?.invalid && form.get('age')?.touched
+                    }"
+                  />
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="inputMenopause">Menopausia</label>
+                <select
+                  class="form-control"
+                  id="inputMenopause"
+                  formControlName="menopause"
+                  [ngClass]="{
+                    'is-invalid':
+                      form.get('menopause')?.invalid &&
+                      form.get('menopause')?.touched
+                  }"
+                >
+                  <option value="no">No</option>
+                  <option value="premenopause">Premenopausia</option>
+                  <option value="it4">IT4</option>
+                  <option value="ge40">GE40</option>
+                </select>
+                <div class="invalid-feedback">
+                  Por favor, selecciona tu menopausia.
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="tumorSize"
+                    >Selecciona el Tamaño del Tumor:
+                    <strong> {{ tumorSize }}</strong></label
+                  >
+                  <input
+                    type="range"
+                    class="form-control"
+                    id="tumorSize"
+                    min="0"
+                    max="55"
+                    step="1"
+                    formControlName="tumorSize"
+                    (input)="actualizarTamanoTumor($event)"
+                    [ngClass]="{
+                      'is-invalid':
+                        form.get('tumorSize')?.invalid &&
+                        form.get('tumorSize')?.touched
+                    }"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="rangoGanglios"
+                    >Selecciona el Estado de Ganglios Invasivos:
+                    <strong>{{ invNodes }}</strong></label
+                  >
+                  <input
+                    type="range"
+                    class="form-control"
+                    id="rangoGanglios"
+                    min="0"
+                    max="36"
+                    step="1"
+                    formControlName="invNodes"
+                    (input)="actualizarGangliosInvasivos($event)"
+                    [ngClass]="{
+                      'is-invalid':
+                        form.get('invNodes')?.invalid &&
+                        form.get('invNodes')?.touched
+                    }"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row d-flex align-items-center">
+              <div class="form-group col-md-6">
+                <label for="nodescaps">Tapas de Nodos</label>
+                <select
+                  class="form-control"
+                  id="nodescaps"
+                  formControlName="nodescaps"
+                  [ngClass]="{
+                    'is-invalid':
+                      form.get('nodescaps')?.invalid &&
+                      form.get('nodescaps')?.touched
+                  }"
+                >
+                  <option value="yes">Sí</option>
+                  <option value="no">No</option>
+                </select>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="degMalig">Grados Malignos</label>
+                <select
+                  class="form-control"
+                  formControlName="degMalig"
+                  id="degMalig"
+                  [ngClass]="{
+                    'is-invalid':
+                      form.get('degMalig')?.invalid &&
+                      form.get('degMalig')?.touched
+                  }"
+                >
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row d-flex align-items-center">
+              <div class="form-group col-md-6">
+                <label for="breast">mama</label>
+                <select
+                  class="form-control"
+                  id="breast"
+                  formControlName="breast"
+                  [ngClass]="{
+                    'is-invalid':
+                      form.get('breast')?.invalid && form.get('breast')?.touched
+                  }"
+                >
+                  <option value="left">Left</option>
+                  <option value="right">Right</option>
+                </select>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="breastQuad">cuádriceps mamario</label>
+                <select
+                  class="form-control"
+                  id="breastQuad"
+                  formControlName="breastQuad"
+                  [ngClass]="{
+                    'is-invalid':
+                      form.get('breastQuad')?.invalid &&
+                      form.get('breastQuad')?.touched
+                  }"
+                >
+                  <option value="left_up">Left Up</option>
+                  <option value="left_low">Left Low</option>
+                  <option value="right_up">Right Up</option>
+                  <option value="right_low">Right Low</option>
+                  <option value="central">Central</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="irradiat">Irradiado</label>
+                <select
+                  class="form-control"
+                  id="irradiat"
+                  formControlName="irradiat"
+                  [ngClass]="{
+                    'is-invalid':
+                      form.get('irradiat')?.invalid &&
+                      form.get('irradiat')?.touched
+                  }"
+                >
+                  <option value="yes">Sí</option>
+                  <option value="no">No</option>
+                </select>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">enviar</button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+              [disabled]="showModalButtonDisabled"
+            >
+              Información completa
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="row justify-content-center">
+          <div class="col-md-8">
+            <ol class="list-group">
+              <li class="list-group-item">Correctas: <strong>288</strong></li>
+              <li class="list-group-item">Incorrectas: <strong>6</strong></li>
+              <li class="list-group-item">
+                Porcentaje de Correctas: <strong>97.9%</strong>
+              </li>
+              <li class="list-group-item">
+                Porcentaje de Incorrectas: <strong>2.1%</strong>
+              </li>
+              <li class="list-group-item">
+                Resultado: <strong>no-recurrence-events</strong>
+              </li>
+              <li class="list-group-item">
+                Información Adicional:
+                <ul>
+                  <li>
+                    Correctly Classified Instances:
+                    <strong>280</strong> (97.9821%)
+                  </li>
+                  <li>Instances: <strong>6</strong> (2.0979%)</li>
+                </ul>
+              </li>
+            </ol>
+          <strong>  <p *ngIf="sugerencias_IA">{{ sugerencias_IA }}</p></strong>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="sugerenciasIA()">
+          SUGERENCIAS POR IA
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
