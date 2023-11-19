@@ -8,17 +8,23 @@ import {RestService} from "../services/rest.service"
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-
+  datos:any
+  form: FormGroup;
+  showModalButtonDisabled = true;
+  age: string = '40-49';
+  tumorSize: string = '20-24';
+  invNodes: string = '18-20';
+  sugerencias_IA: string = '';
 
   ngOnInit() {
-    this.obtenerDatos(); 
+    //this.obtenerDatos(); 
   }
 
 
   obtenerDatos() {
     this.apiService.getData().subscribe(
-      (data: any) => {
-        console.log('Datos obtenidos:', data);
+      (data) => {
+        this.datos =data;
       },
       error => {
         console.error('Error al obtener datos:', error);
@@ -26,12 +32,6 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  form: FormGroup;
-  showModalButtonDisabled = true;
-  age: string = '40-49';
-  tumorSize: string = '20-24';
-  invNodes: string = '18-20';
-  sugerencias_IA: string = '';
 
   constructor(private formBuilder: FormBuilder,  private apiService: RestService) {
     this.form = this.formBuilder.group({
@@ -126,5 +126,6 @@ export class HomeComponent implements OnInit {
   sugerenciasIA() {
     this.sugerencias_IA = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
   }
+  
 
 }

@@ -18,7 +18,8 @@
                   formControlName="fullname"
                   [ngClass]="{
                     'is-invalid':
-                      form.get('fullname')?.invalid && form.get('fullname')?.touched
+                      form.get('fullname')?.invalid &&
+                      form.get('fullname')?.touched
                   }"
                 />
               </div>
@@ -35,10 +36,9 @@
                       form.get('identificationcard')?.invalid &&
                       form.get('identificationcard')?.touched
                   }"
-                  min="0" 
+                  min="0"
                 />
               </div>
-              
             </div>
 
             <div class="form-row">
@@ -46,7 +46,8 @@
                 <div class="form-group">
                   <label for="rangoEdad"
                     >Selecciona tu Rango de Edad:
-                    <strong> {{ age }}</strong></label>
+                    <strong> {{ age }}</strong></label
+                  >
                   <input
                     type="range"
                     class="form-control"
@@ -62,6 +63,7 @@
                   />
                 </div>
               </div>
+
               <div class="form-group col-md-6">
                 <label for="inputMenopause">Menopausia</label>
                 <select
@@ -74,14 +76,10 @@
                       form.get('menopause')?.touched
                   }"
                 >
-                  <option value="no">No</option>
                   <option value="premeno">Premenopausia</option>
                   <option value="it4">IT4</option>
                   <option value="ge40">GE40</option>
                 </select>
-                <div class="invalid-feedback">
-                  Por favor, selecciona tu menopausia.
-                </div>
               </div>
             </div>
 
@@ -101,7 +99,6 @@
                     step="1"
                     formControlName="tumorSize"
                     (input)="actualizarTamanoTumor($event)"
-                    
                   />
                 </div>
               </div>
@@ -175,9 +172,8 @@
                       form.get('breast')?.invalid && form.get('breast')?.touched
                   }"
                 >
-                <option value="left">Izquierda (Left)</option>
-                <option value="right">Derecha (Right)</option>
-                
+                  <option value="left">Izquierda</option>
+                  <option value="right">Derecha</option>
                 </select>
               </div>
               <div class="form-group col-md-6">
@@ -192,17 +188,16 @@
                       form.get('breastQuad')?.touched
                   }"
                 >
-                <option value="left_up">Izquierda Arriba(Left Up)</option>
-                <option value="left_low">Izquierda Abajo (Left Low)</option>
-                <option value="right_up">Derecha Arriba (Right Up)</option>
-                <option value="right_low">Derecha Abajo (Right Low)</option>
-                <option value="central">Central (Central)</option>
-                
+                  <option value="left_up">Izquierda Arriba</option>
+                  <option value="left_low">Izquierda Abajo</option>
+                  <option value="right_up">Derecha Arriba</option>
+                  <option value="right_low">Derecha Abajo</option>
+                  <option value="central">Central</option>
                 </select>
               </div>
             </div>
             <div class="form-row">
-              <div class="form-group col-md-6">
+              <div class="form-group col-md-6 mb-5">
                 <label for="irradiat">Irradiado</label>
                 <select
                   class="form-control"
@@ -260,29 +255,27 @@
         <div class="row justify-content-center">
           <div class="col-md-8">
             <ol class="list-group">
-              <li class="list-group-item">Correctas: <strong>288</strong></li>
-              <li class="list-group-item">Incorrectas: <strong>6</strong></li>
               <li class="list-group-item">
-                Porcentaje de Correctas: <strong>97.9%</strong>
+                Correctas: <strong>{{ datos.correctas }}</strong>
               </li>
               <li class="list-group-item">
-                Porcentaje de Incorrectas: <strong>2.1%</strong>
+                Incorrectas: <strong>{{ datos.incorrectas }}</strong>
               </li>
               <li class="list-group-item">
-                Resultado: <strong>no-recurrence-events</strong>
+                Porcentaje de Correctas:
+                <strong>{{ datos.correctasPorcentaje }}</strong>
               </li>
               <li class="list-group-item">
-                Información Adicional:
-                <ul>
-                  <li>
-                    Correctly Classified Instances:
-                    <strong>280</strong> (97.9821%)
-                  </li>
-                  <li>Instances: <strong>6</strong> (2.0979%)</li>
-                </ul>
+                Porcentaje de Incorrectas:
+                <strong>{{ datos.incorrectasPorcentaje }}</strong>
+              </li>
+              <li class="list-group-item">
+                Resultado: <strong>{{ datos.Resultado }}</strong>
               </li>
             </ol>
-          <strong>  <p *ngIf="sugerencias_IA">{{ sugerencias_IA }}</p></strong>
+            <strong>
+              <p *ngIf="sugerencias_IA">{{ sugerencias_IA }}</p></strong
+            >
           </div>
         </div>
       </div>
