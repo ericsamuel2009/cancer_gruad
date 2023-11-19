@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {RestService} from "../services/rest.service"
@@ -9,6 +9,7 @@ import { EventType } from '@angular/router';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  @ViewChild('btnSubmit', { static: true }) submirBtn!: ElementRef;
   datos:any = [];
   form: FormGroup;
   showModalButtonDisabled = true;
@@ -16,7 +17,7 @@ export class HomeComponent implements OnInit {
   tumorSize: string = '20-24';
   invNodes: string = '18-20';
   sugerencias_IA: string = '';
-  public loading: boolean = false; 
+  public loading: boolean = false;
 
   ngOnInit() {
     //this.obtenerDatos(); 
@@ -35,10 +36,11 @@ export class HomeComponent implements OnInit {
   }
 
 
-  constructor(private formBuilder: FormBuilder,  private apiService: RestService) {
+  constructor(private formBuilder: FormBuilder,  private apiService: RestService, private renderer: Renderer2) {
     this.form = this.formBuilder.group({
       fullname: ['', Validators.required],
       identificationcard: [null, Validators.required],
+      saveResult: [false],
       age: [''],
       menopause: ['', Validators.required],
       tumorSize: [''],
@@ -49,6 +51,20 @@ export class HomeComponent implements OnInit {
       breastQuad: ['', Validators.required],
       irradiat: ['', Validators.required],
     });
+  }
+
+  agregarAtributos() {
+    if (this.form.valid) {
+      const elementoSelected = this.submirBtn.nativeElement;
+      this.renderer.setAttribute(elementoSelected, 'data-bs-toggle', 'modal');
+      this.renderer.setAttribute(elementoSelected, 'data-bs-target', '#exampleModal');
+    }
+  }
+
+  quitarAtributos() {
+    const elementoSelected = this.submirBtn.nativeElement;
+    this.renderer.removeAttribute(elementoSelected, 'data-bs-toggle');
+    this.renderer.removeAttribute(elementoSelected, 'data-bs-target');
   }
 
   resultConvert(evento: EventType): String {
@@ -62,9 +78,11 @@ export class HomeComponent implements OnInit {
   onSubmit() {
     
     if (this.form.valid) {
+    this.sugerencias_IA = '';
     const newJson = {
       fullname: this.form.value.fullname,
       identificationcard: this.form.value.identificationcard,
+      saveResult: this.form.value.saveResult,
       age: this.age, 
       menopause: this.form.value.menopause,
       tumorSize: this.tumorSize, 
@@ -151,11 +169,6 @@ export class HomeComponent implements OnInit {
       this.sugerencias_IA = response.respuesta;
     })
     
-  }
-
-  modalOpen() {
-    this.sugerencias_IA = '';
-
   }
   
 
