@@ -19,7 +19,6 @@ export class HomeComponent implements OnInit {
     this.apiService.getData().subscribe(
       (data: any) => {
         console.log('Datos obtenidos:', data);
-        // Actualiza tus variables o propiedades con los datos obtenidos
       },
       error => {
         console.error('Error al obtener datos:', error);
@@ -30,18 +29,18 @@ export class HomeComponent implements OnInit {
   form: FormGroup;
   showModalButtonDisabled = true;
   age: string = '40-49';
-  tumorSize: string = '0-4';
-  invNodes: string = '0-2';
+  tumorSize: string = '20-24';
+  invNodes: string = '18-20';
   sugerencias_IA: string = '';
 
   constructor(private formBuilder: FormBuilder,  private apiService: RestService) {
     this.form = this.formBuilder.group({
       fullname: ['', Validators.required],
       identificationcard: [null, Validators.required],
-      age: ['', Validators.required],
+      age: [''],
       menopause: ['', Validators.required],
-      tumorSize: ['', Validators.required],
-      invNodes: ['', Validators.required],
+      tumorSize: [''],
+      invNodes: [''],
       nodecaps: ['', Validators.required],
       degMalig: ['', Validators.required],
       breast: ['', Validators.required],
