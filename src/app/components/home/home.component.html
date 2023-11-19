@@ -3,7 +3,7 @@
     <div class="col-md-6">
       <div class="card">
         <div class="card-header">
-          <h2 class="mb-0">Formulario</h2>
+          <h2 class="mb-0">Prediccion de cancer de mama</h2>
         </div>
         <div class="card-body">
           <form [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -15,26 +15,28 @@
                   class="form-control w-10"
                   id="inputNombre"
                   placeholder="Nombre"
-                  formControlName="nombre"
+                  formControlName="fullname"
                   [ngClass]="{
                     'is-invalid':
-                      form.get('nombre')?.invalid && form.get('nombre')?.touched
+                      form.get('fullname')?.invalid &&
+                      form.get('fullname')?.touched
                   }"
                 />
               </div>
               <div class="form-group col-md-6">
                 <label for="inputIdentificacion">Identificación</label>
                 <input
-                  type="text"
+                  type="number"
                   class="form-control"
                   id="inputIdentificacion"
                   placeholder="Identificación"
-                  formControlName="identificacion"
+                  formControlName="identificationcard"
                   [ngClass]="{
                     'is-invalid':
-                      form.get('identificacion')?.invalid &&
-                      form.get('identificacion')?.touched
+                      form.get('identificationcard')?.invalid &&
+                      form.get('identificationcard')?.touched
                   }"
+                  min="0"
                 />
               </div>
             </div>
@@ -61,6 +63,7 @@
                   />
                 </div>
               </div>
+
               <div class="form-group col-md-6">
                 <label for="inputMenopause">Menopausia</label>
                 <select
@@ -73,14 +76,10 @@
                       form.get('menopause')?.touched
                   }"
                 >
-                  <option value="no">No</option>
-                  <option value="premenopause">Premenopausia</option>
-                  <option value="it4">IT4</option>
-                  <option value="ge40">GE40</option>
+                  <option value="premeno">Premenopausia</option>
+                  <option value="lt40">Menos de 40</option>
+                  <option value="ge40">Mayor o igual a 40</option>
                 </select>
-                <div class="invalid-feedback">
-                  Por favor, selecciona tu menopausia.
-                </div>
               </div>
             </div>
 
@@ -100,11 +99,6 @@
                     step="1"
                     formControlName="tumorSize"
                     (input)="actualizarTamanoTumor($event)"
-                    [ngClass]="{
-                      'is-invalid':
-                        form.get('tumorSize')?.invalid &&
-                        form.get('tumorSize')?.touched
-                    }"
                   />
                 </div>
               </div>
@@ -126,11 +120,6 @@
                     step="1"
                     formControlName="invNodes"
                     (input)="actualizarGangliosInvasivos($event)"
-                    [ngClass]="{
-                      'is-invalid':
-                        form.get('invNodes')?.invalid &&
-                        form.get('invNodes')?.touched
-                    }"
                   />
                 </div>
               </div>
@@ -138,15 +127,15 @@
 
             <div class="form-row d-flex align-items-center">
               <div class="form-group col-md-6">
-                <label for="nodescaps">Tapas de Nodos</label>
+                <label for="nodecaps">Capas de Nodos</label>
                 <select
                   class="form-control"
-                  id="nodescaps"
-                  formControlName="nodescaps"
+                  id="nodecaps"
+                  formControlName="nodecaps"
                   [ngClass]="{
                     'is-invalid':
-                      form.get('nodescaps')?.invalid &&
-                      form.get('nodescaps')?.touched
+                      form.get('nodecaps')?.invalid &&
+                      form.get('nodecaps')?.touched
                   }"
                 >
                   <option value="yes">Sí</option>
@@ -183,8 +172,8 @@
                       form.get('breast')?.invalid && form.get('breast')?.touched
                   }"
                 >
-                  <option value="left">Left</option>
-                  <option value="right">Right</option>
+                  <option value="left">Izquierda</option>
+                  <option value="right">Derecha</option>
                 </select>
               </div>
               <div class="form-group col-md-6">
@@ -199,16 +188,16 @@
                       form.get('breastQuad')?.touched
                   }"
                 >
-                  <option value="left_up">Left Up</option>
-                  <option value="left_low">Left Low</option>
-                  <option value="right_up">Right Up</option>
-                  <option value="right_low">Right Low</option>
+                  <option value="left_up">Izquierda Arriba</option>
+                  <option value="left_low">Izquierda Abajo</option>
+                  <option value="right_up">Derecha Arriba</option>
+                  <option value="right_low">Derecha Abajo</option>
                   <option value="central">Central</option>
                 </select>
               </div>
             </div>
             <div class="form-row">
-              <div class="form-group col-md-6">
+              <div class="form-group col-md-6 mb-5">
                 <label for="irradiat">Irradiado</label>
                 <select
                   class="form-control"
@@ -226,16 +215,11 @@
               </div>
             </div>
 
-            <button type="submit" class="btn btn-primary">enviar</button>
-            <button
-              type="button"
-              class="btn btn-primary"
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
-              [disabled]="showModalButtonDisabled"
-            >
-              Información completa
-            </button>
+            <button type="submit"
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            (click)="modalOpen()">enviar</button>
           </form>
         </div>
       </div>
@@ -254,7 +238,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Resultado</h5>
         <button
           type="button"
           class="btn-close"
@@ -264,37 +248,39 @@
       </div>
       <div class="modal-body">
         <div class="row justify-content-center">
-          <div class="col-md-8">
+          <div class="col-md-12">
             <ol class="list-group">
-              <li class="list-group-item">Correctas: <strong>288</strong></li>
-              <li class="list-group-item">Incorrectas: <strong>6</strong></li>
               <li class="list-group-item">
-                Porcentaje de Correctas: <strong>97.9%</strong>
+                Correctas: <strong>{{ datos.correctas }}</strong>
               </li>
               <li class="list-group-item">
-                Porcentaje de Incorrectas: <strong>2.1%</strong>
+                Incorrectas: <strong>{{ datos.incorrectas }}</strong>
               </li>
               <li class="list-group-item">
-                Resultado: <strong>no-recurrence-events</strong>
+                Porcentaje de Correctas:
+                <strong>{{ datos.correctasPorcentaje }}</strong>
               </li>
               <li class="list-group-item">
-                Información Adicional:
-                <ul>
-                  <li>
-                    Correctly Classified Instances:
-                    <strong>280</strong> (97.9821%)
-                  </li>
-                  <li>Instances: <strong>6</strong> (2.0979%)</li>
-                </ul>
+                Porcentaje de Incorrectas:
+                <strong>{{ datos.incorrectasPorcentaje }}</strong>
+              </li>
+              <li class="list-group-item">
+                Resultado: <strong>{{ resultConvert(datos.Resultado) }}</strong>
               </li>
             </ol>
-          <strong>  <p *ngIf="sugerencias_IA">{{ sugerencias_IA }}</p></strong>
+            <div class="spinner-grow" role="status" *ngIf="loading">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <strong>
+              <p *ngIf="!loading" [innerHTML]="sugerencias_IA" [style.white-space]="'pre-line'"></p>
+            </strong
+            >
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="sugerenciasIA()">
-          SUGERENCIAS POR IA
+        <button type="button" class="btn btn-primary" (click)="sugerenciasIA()" [disabled]="sugerencias_IA">
+          SUGERENCIAS
         </button>
       </div>
     </div>

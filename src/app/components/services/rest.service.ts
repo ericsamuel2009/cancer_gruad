@@ -1,20 +1,27 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class RestService {
-  private apiUrl = 'urlapi'; 
-
-  constructor (private http:HttpClient) { }
+  private apiUrl = 'http://localhost:8082';
+  public headers:any;
+  constructor (private http:HttpClient) { 
+     this.headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+  }
 
   getData(): Observable<any> {
-    return this.http.get(`${this.apiUrl}`);
+    return this.http.get(`${this.apiUrl}/default`);
   }
+  
   postData(formData: any): Observable<any> {
-    const url = `${this.apiUrl}`; 
+   return this.http.post(`${this.apiUrl}/breastcancer/consult`, formData, { headers: this.headers });
+  }
 
-   return this.http.post(url, formData);
+  chatgptService(message: any) {
+    return this.http.post(`${this.apiUrl}/chatgpt/chat`, message, { headers: this.headers });
   }
 }

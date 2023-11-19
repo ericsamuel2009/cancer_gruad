@@ -2,24 +2,31 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {RestService} from "../services/rest.service"
+import { EventType } from '@angular/router';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-
+  datos:any = [];
+  form: FormGroup;
+  showModalButtonDisabled = true;
+  age: string = '40-49';
+  tumorSize: string = '20-24';
+  invNodes: string = '18-20';
+  sugerencias_IA: string = '';
+  public loading: boolean = false; 
 
   ngOnInit() {
-    this.obtenerDatos(); 
+    //this.obtenerDatos(); 
   }
 
 
   obtenerDatos() {
     this.apiService.getData().subscribe(
-      (data: any) => {
-        console.log('Datos obtenidos:', data);
-        // Actualiza tus variables o propiedades con los datos obtenidos
+      (data) => {
+        this.datos =data;
       },
       error => {
         console.error('Error al obtener datos:', error);
@@ -27,22 +34,16 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  form: FormGroup;
-  showModalButtonDisabled = true;
-  age: string = '40-49';
-  tumorSize: string = '0-4';
-  invNodes: string = '0-2';
-  sugerencias_IA: string = '';
 
   constructor(private formBuilder: FormBuilder,  private apiService: RestService) {
     this.form = this.formBuilder.group({
-      nombre: ['', Validators.required],
-      identificacion: ['', Validators.required],
-      age: ['', Validators.required],
+      fullname: ['', Validators.required],
+      identificationcard: [null, Validators.required],
+      age: [''],
       menopause: ['', Validators.required],
-      tumorSize: ['', Validators.required],
-      invNodes: ['', Validators.required],
-      nodescaps: ['', Validators.required],
+      tumorSize: [''],
+      invNodes: [''],
+      nodecaps: ['', Validators.required],
       degMalig: ['', Validators.required],
       breast: ['', Validators.required],
       breastQuad: ['', Validators.required],
@@ -50,31 +51,40 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  resultConvert(evento: EventType): String {
+    const EVENT_OR_NOT_EVENT:any = {
+      "no-recurrence-events": "No tiene cancer de mama",
+      "recurrence-events": "Presenta Cancer de mama"
+    }
+    return EVENT_OR_NOT_EVENT[evento] || evento;
+  }
   
   onSubmit() {
     
     if (this.form.valid) {
     const newJson = {
-      nombre: this.form.value.nombre,
-      identificacion: this.form.value.identificacion,
+      fullname: this.form.value.fullname,
+      identificationcard: this.form.value.identificationcard,
       age: this.age, 
       menopause: this.form.value.menopause,
       tumorSize: this.tumorSize, 
       invNodes: this.invNodes, 
-      nodescaps:  this.form.value.nodescaps,
+      nodecaps:  this.form.value.nodecaps,
       degMalig:  this.form.value.degMalig,
       breast:  this.form.value.breast,
       breastQuad:  this.form.value.breastQuad,
       irradiat: this.form.value.irradiat,
     };
-
-
-    console.log(newJson);
     this.showModalButtonDisabled = false;
     this.apiService.postData(newJson).subscribe(
       response => {
         console.log('Respuesta del servidor:', response);
         this.showModalButtonDisabled = false;
+        if (response.status == 'error') {
+          //Modal error
+          return
+        }
+        this.datos = response;
       },
       error => {
         console.error('Error en la solicitud:', error);
@@ -124,8 +134,29 @@ export class HomeComponent implements OnInit {
   }
 
   
-  sugerenciasIA() {
-    this.sugerencias_IA = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
+  async sugerenciasIA() {
+    interface ParamsI {
+      message: string;
+    }
+    const params: ParamsI = {
+      message: this.datos.Resultado
+    } ;
+    this.loading = true;
+    this.apiService.chatgptService(params).subscribe( (response: any) => {
+      this.loading = false;
+      if (response.status != "OK") {
+        //MENSAJE DE ERROR QUE NO RESPONDIO CHATGPT
+        return
+      }
+      this.sugerencias_IA = response.respuesta;
+    })
+    
   }
+
+  modalOpen() {
+    this.sugerencias_IA = '';
+
+  }
+  
 
 }
