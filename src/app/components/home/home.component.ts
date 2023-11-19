@@ -2,19 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {RestService} from "../services/rest.service"
+import { EventType } from '@angular/router';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  datos:any
+  datos:any = [];
   form: FormGroup;
   showModalButtonDisabled = true;
   age: string = '40-49';
   tumorSize: string = '20-24';
   invNodes: string = '18-20';
   sugerencias_IA: string = '';
+  public loading: boolean = false; 
 
   ngOnInit() {
     //this.obtenerDatos(); 
@@ -49,6 +51,13 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  resultConvert(evento: EventType): String {
+    const EVENT_OR_NOT_EVENT:any = {
+      "no-recurrence-events": "No tiene cancer de mama",
+      "recurrence-events": "Presenta Cancer de mama"
+    }
+    return EVENT_OR_NOT_EVENT[evento] || evento;
+  }
   
   onSubmit() {
     
@@ -66,14 +75,16 @@ export class HomeComponent implements OnInit {
       breastQuad:  this.form.value.breastQuad,
       irradiat: this.form.value.irradiat,
     };
-
-
-    console.log(newJson);
     this.showModalButtonDisabled = false;
     this.apiService.postData(newJson).subscribe(
       response => {
         console.log('Respuesta del servidor:', response);
         this.showModalButtonDisabled = false;
+        if (response.status == 'error') {
+          //Modal error
+          return
+        }
+        this.datos = response;
       },
       error => {
         console.error('Error en la solicitud:', error);
@@ -123,8 +134,28 @@ export class HomeComponent implements OnInit {
   }
 
   
-  sugerenciasIA() {
-    this.sugerencias_IA = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
+  async sugerenciasIA() {
+    interface ParamsI {
+      message: string;
+    }
+    const params: ParamsI = {
+      message: this.datos.Resultado
+    } ;
+    this.loading = true;
+    this.apiService.chatgptService(params).subscribe( (response: any) => {
+      this.loading = false;
+      if (response.status != "OK") {
+        //MENSAJE DE ERROR QUE NO RESPONDIO CHATGPT
+        return
+      }
+      this.sugerencias_IA = response.respuesta;
+    })
+    
+  }
+
+  modalOpen() {
+    this.sugerencias_IA = '';
+
   }
   
 
