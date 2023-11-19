@@ -15,28 +15,30 @@
                   class="form-control w-10"
                   id="inputNombre"
                   placeholder="Nombre"
-                  formControlName="nombre"
+                  formControlName="fullname"
                   [ngClass]="{
                     'is-invalid':
-                      form.get('nombre')?.invalid && form.get('nombre')?.touched
+                      form.get('fullname')?.invalid && form.get('fullname')?.touched
                   }"
                 />
               </div>
               <div class="form-group col-md-6">
                 <label for="inputIdentificacion">Identificación</label>
                 <input
-                  type="text"
+                  type="number"
                   class="form-control"
                   id="inputIdentificacion"
                   placeholder="Identificación"
-                  formControlName="identificacion"
+                  formControlName="identificationcard"
                   [ngClass]="{
                     'is-invalid':
-                      form.get('identificacion')?.invalid &&
-                      form.get('identificacion')?.touched
+                      form.get('identificationcard')?.invalid &&
+                      form.get('identificationcard')?.touched
                   }"
+                  min="0" 
                 />
               </div>
+              
             </div>
 
             <div class="form-row">
@@ -44,8 +46,7 @@
                 <div class="form-group">
                   <label for="rangoEdad"
                     >Selecciona tu Rango de Edad:
-                    <strong> {{ age }}</strong></label
-                  >
+                    <strong> {{ age }}</strong></label>
                   <input
                     type="range"
                     class="form-control"
@@ -74,7 +75,7 @@
                   }"
                 >
                   <option value="no">No</option>
-                  <option value="premenopause">Premenopausia</option>
+                  <option value="premeno">Premenopausia</option>
                   <option value="it4">IT4</option>
                   <option value="ge40">GE40</option>
                 </select>
@@ -100,11 +101,7 @@
                     step="1"
                     formControlName="tumorSize"
                     (input)="actualizarTamanoTumor($event)"
-                    [ngClass]="{
-                      'is-invalid':
-                        form.get('tumorSize')?.invalid &&
-                        form.get('tumorSize')?.touched
-                    }"
+                    
                   />
                 </div>
               </div>
@@ -126,11 +123,6 @@
                     step="1"
                     formControlName="invNodes"
                     (input)="actualizarGangliosInvasivos($event)"
-                    [ngClass]="{
-                      'is-invalid':
-                        form.get('invNodes')?.invalid &&
-                        form.get('invNodes')?.touched
-                    }"
                   />
                 </div>
               </div>
@@ -138,15 +130,15 @@
 
             <div class="form-row d-flex align-items-center">
               <div class="form-group col-md-6">
-                <label for="nodescaps">Tapas de Nodos</label>
+                <label for="nodecaps">Tapas de Nodos</label>
                 <select
                   class="form-control"
-                  id="nodescaps"
-                  formControlName="nodescaps"
+                  id="nodecaps"
+                  formControlName="nodecaps"
                   [ngClass]="{
                     'is-invalid':
-                      form.get('nodescaps')?.invalid &&
-                      form.get('nodescaps')?.touched
+                      form.get('nodecaps')?.invalid &&
+                      form.get('nodecaps')?.touched
                   }"
                 >
                   <option value="yes">Sí</option>
@@ -183,8 +175,9 @@
                       form.get('breast')?.invalid && form.get('breast')?.touched
                   }"
                 >
-                  <option value="left">Left</option>
-                  <option value="right">Right</option>
+                <option value="left">Izquierda (Left)</option>
+                <option value="right">Derecha (Right)</option>
+                
                 </select>
               </div>
               <div class="form-group col-md-6">
@@ -199,11 +192,12 @@
                       form.get('breastQuad')?.touched
                   }"
                 >
-                  <option value="left_up">Left Up</option>
-                  <option value="left_low">Left Low</option>
-                  <option value="right_up">Right Up</option>
-                  <option value="right_low">Right Low</option>
-                  <option value="central">Central</option>
+                <option value="left_up">Izquierda Arriba(Left Up)</option>
+                <option value="left_low">Izquierda Abajo (Left Low)</option>
+                <option value="right_up">Derecha Arriba (Right Up)</option>
+                <option value="right_low">Derecha Abajo (Right Low)</option>
+                <option value="central">Central (Central)</option>
+                
                 </select>
               </div>
             </div>

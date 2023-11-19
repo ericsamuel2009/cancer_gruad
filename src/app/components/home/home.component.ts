@@ -19,7 +19,6 @@ export class HomeComponent implements OnInit {
     this.apiService.getData().subscribe(
       (data: any) => {
         console.log('Datos obtenidos:', data);
-        // Actualiza tus variables o propiedades con los datos obtenidos
       },
       error => {
         console.error('Error al obtener datos:', error);
@@ -30,19 +29,19 @@ export class HomeComponent implements OnInit {
   form: FormGroup;
   showModalButtonDisabled = true;
   age: string = '40-49';
-  tumorSize: string = '0-4';
-  invNodes: string = '0-2';
+  tumorSize: string = '20-24';
+  invNodes: string = '18-20';
   sugerencias_IA: string = '';
 
   constructor(private formBuilder: FormBuilder,  private apiService: RestService) {
     this.form = this.formBuilder.group({
-      nombre: ['', Validators.required],
-      identificacion: ['', Validators.required],
-      age: ['', Validators.required],
+      fullname: ['', Validators.required],
+      identificationcard: [null, Validators.required],
+      age: [''],
       menopause: ['', Validators.required],
-      tumorSize: ['', Validators.required],
-      invNodes: ['', Validators.required],
-      nodescaps: ['', Validators.required],
+      tumorSize: [''],
+      invNodes: [''],
+      nodecaps: ['', Validators.required],
       degMalig: ['', Validators.required],
       breast: ['', Validators.required],
       breastQuad: ['', Validators.required],
@@ -55,13 +54,13 @@ export class HomeComponent implements OnInit {
     
     if (this.form.valid) {
     const newJson = {
-      nombre: this.form.value.nombre,
-      identificacion: this.form.value.identificacion,
+      fullname: this.form.value.fullname,
+      identificationcard: this.form.value.identificationcard,
       age: this.age, 
       menopause: this.form.value.menopause,
       tumorSize: this.tumorSize, 
       invNodes: this.invNodes, 
-      nodescaps:  this.form.value.nodescaps,
+      nodecaps:  this.form.value.nodecaps,
       degMalig:  this.form.value.degMalig,
       breast:  this.form.value.breast,
       breastQuad:  this.form.value.breastQuad,
