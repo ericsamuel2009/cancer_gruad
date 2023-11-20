@@ -12,7 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './components/home/home.component';
 import { RoutingModule } from './components/routing.module';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { NgbModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbTooltipModule, NgbPopoverModule  } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -30,7 +30,8 @@ import { NgbModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
     MatFormFieldModule,
     HttpClientModule,
     NgbModule,
-    NgbTooltipModule
+    NgbTooltipModule,
+    NgbPopoverModule
     
   ],
   providers: [],

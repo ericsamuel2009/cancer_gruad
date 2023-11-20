@@ -13,7 +13,9 @@
                   <i 
                     class="bi bi-info-circle-fill mb-3"
                     placement="top"
-                    ngbTooltip="Se refiere al nombre de la paciente."
+                    ngbPopover="Se refiere al nombre de la paciente."
+                    triggers="mouseenter:mouseleave"
+                    popoverTitle="Informacion"
                     [openDelay]="300"
                     [closeDelay]="500"
                     ></i>
@@ -40,7 +42,9 @@
                   <i 
                     class="bi bi-info-circle-fill" 
                     placement="top" 
-                    ngbTooltip="Cedula de la paciente."
+                    ngbPopover="Cedula de la paciente."
+                    triggers="mouseenter:mouseleave"
+                    popoverTitle="Informacion"
                     [openDelay]="300"
                     [closeDelay]="500"
                   ></i>
@@ -71,7 +75,11 @@
                   <i 
                     class="bi bi-info-circle-fill"
                     placement="top"
-                    ngbTooltip="Se refiere a la edad del paciente en años."
+                    ngbPopover="Se refiere a la edad del paciente en años."
+                    triggers="mouseenter:mouseleave"
+                    popoverTitle="Informacion"
+                    [openDelay]="300"
+                    [closeDelay]="500"
                     ></i>
                   Rango de Edad: <strong> {{ age }}</strong>
                 </label>
@@ -99,7 +107,11 @@
                   <i 
                     class="bi bi-info-circle-fill"
                     placement="top"
-                    ngbTooltip="Se refiere al estado de la menopausia de la paciente en años."
+                    ngbPopover="Se refiere al estado de la menopausia de la paciente en años."
+                    triggers="mouseenter:mouseleave"
+                    popoverTitle="Informacion"
+                    [openDelay]="300"
+                    [closeDelay]="500"
                     ></i>
                   Menopausia
                 </label>
@@ -128,7 +140,11 @@
                     <i 
                       class="bi bi-info-circle-fill"
                       placement="top"
-                      ngbTooltip="Se refiere al tamaño del tumor detectado en el paciente."
+                      ngbPopover="Se refiere al tamaño del tumor detectado en el paciente."
+                      triggers="mouseenter:mouseleave"
+                      popoverTitle="Informacion"
+                      [openDelay]="300"
+                      [closeDelay]="500"
                     ></i>
                     Tamaño del Tumor: <strong> {{ tumorSize }}</strong>
                   </label>
@@ -151,7 +167,11 @@
                     <i 
                       class="bi bi-info-circle-fill mb-3" 
                       placement="top" 
-                      ngbTooltip="Esta característica indica cuántos ganglios linfáticos están afectados o invadidos por las células cancerosas."
+                      ngbPopover="Esta característica indica cuántos ganglios linfáticos están afectados o invadidos por las células cancerosas."
+                      triggers="mouseenter:mouseleave"
+                      popoverTitle="Informacion"
+                      [openDelay]="300"
+                      [closeDelay]="500"
                     ></i>
                     Estado de Ganglios Invasivos: <strong>{{ invNodes }}</strong>
                   </label>
@@ -173,7 +193,11 @@
                   <i 
                     class="bi bi-info-circle-fill" 
                     placement="top" 
-                    ngbTooltip="Se refiere a si las cápsulas que rodean los nodos linfáticos están afectadas o no por el cáncer."
+                    ngbPopover="Se refiere a si las cápsulas que rodean los nodos linfáticos están afectadas o no por el cáncer."
+                    triggers="mouseenter:mouseleave"
+                    popoverTitle="Informacion"
+                    [openDelay]="300"
+                    [closeDelay]="500"
                   ></i>
                   Capas de Nodos
                 </label>
@@ -205,7 +229,11 @@
                   <i 
                     class="bi bi-info-circle-fill" 
                     placement="top" 
-                    [ngbTooltip]="tipContent"
+                    [ngbPopover]="tipContent"
+                    triggers="mouseenter:mouseleave"
+                    popoverTitle="Informacion"
+                    [openDelay]="300"
+                    [closeDelay]="500"
                   ></i>
                   Grados Malignos
                 </label>
@@ -230,7 +258,11 @@
                   <i 
                     class="bi bi-info-circle-fill" 
                     placement="top" 
-                    ngbTooltip="Se refiere al lado del pecho en el que se encuentra el tumor."
+                    ngbPopover="Se refiere al lado del pecho en el que se encuentra el tumor."
+                    triggers="mouseenter:mouseleave"
+                    popoverTitle="Informacion"
+                    [openDelay]="300"
+                    [closeDelay]="500"
                   ></i>
                   mama
                 </label>
@@ -256,7 +288,11 @@
                   <i 
                     class="bi bi-info-circle-fill mb-3" 
                     placement="top" 
-                    ngbTooltip="Se refiere a la ubicación del tumor en el cuadrante del seno."
+                    ngbPopover="Se refiere a la ubicación del tumor en el cuadrante del seno."
+                    triggers="mouseenter:mouseleave"
+                    popoverTitle="Informacion"
+                    [openDelay]="300"
+                    [closeDelay]="500"
                   ></i>
                   Cuadrante mamario
                 </label>
@@ -287,7 +323,11 @@
                   <i 
                     class="bi bi-info-circle-fill"
                     placement="top" 
-                    ngbTooltip="Se refiere a si el paciente ha recibido radioterapia."
+                    ngbPopover="Se refiere a si el paciente ha recibido radioterapia."
+                    triggers="mouseenter:mouseleave"
+                    popoverTitle="Informacion"
+                    [openDelay]="300"
+                    [closeDelay]="500"
                   ></i>
                   recibio Radioterapia?
                 </label>
@@ -321,7 +361,15 @@
                     form.get('saveResult')?.touched
                 }" checked>
                 <label for="flexSwitchCheckChecked" class="form-check-label">
-                  <i class="bi bi-info-circle-fill mb-3" placement="top" ngbTooltip="Esto es para indicar si se quiere guardar la prediccion"></i>
+                  <i 
+                    class="bi bi-info-circle-fill" 
+                    placement="top" 
+                    ngbPopover="Esto es para indicar si se quiere guardar la prediccion o no"
+                    triggers="mouseenter:mouseleave"
+                    popoverTitle="Informacion"
+                    [openDelay]="300"
+                    [closeDelay]="500"
+                  ></i>
                   deseas Guardar el resultado?
                 </label> 
               </div>
