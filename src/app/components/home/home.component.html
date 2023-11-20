@@ -6,15 +6,24 @@
           <h2 class="mb-0">Prediccion de cancer de mama</h2>
         </div>
         <div class="card-body">
-          <form [formGroup]="form" (ngSubmit)="onSubmit()">
-            <div class="form-row d-flex align-items-center">
-              <div class="form-group col-md-6">
-                <label for="inputNombre">Nombre</label>
+          <form [formGroup]="form" class="row g-3 needs-validation" (ngSubmit)="onSubmit()">
+
+              <div class="col-md-6">
+                <label for="inputNombre">
+                  <i 
+                    class="bi bi-info-circle-fill mb-3"
+                    placement="top"
+                    ngbTooltip="Se refiere al nombre de la paciente."
+                    [openDelay]="300"
+                    [closeDelay]="500"
+                    ></i>
+                  Nombre
+                </label>
                 <input
                   type="text"
                   class="form-control w-10"
                   id="inputNombre"
-                  placeholder="Nombre"
+                  placeholder="Armando mendoza..."
                   formControlName="fullname"
                   [ngClass]="{
                     'is-invalid':
@@ -22,14 +31,26 @@
                       form.get('fullname')?.touched
                   }"
                 />
+                <div class="invalid-feedback">
+                  Campo nombre es obligatorio.
+                </div>
               </div>
-              <div class="form-group col-md-6">
-                <label for="inputIdentificacion">Identificación</label>
+              <div class="col-md-6">
+                <label for="inputIdentificacion">
+                  <i 
+                    class="bi bi-info-circle-fill" 
+                    placement="top" 
+                    ngbTooltip="Cedula de la paciente."
+                    [openDelay]="300"
+                    [closeDelay]="500"
+                  ></i>
+                  Identificación
+                </label>
                 <input
                   type="number"
                   class="form-control"
                   id="inputIdentificacion"
-                  placeholder="Identificación"
+                  placeholder="xxxxxxxxxx"
                   formControlName="identificationcard"
                   [ngClass]="{
                     'is-invalid':
@@ -38,16 +59,21 @@
                   }"
                   min="0"
                 />
+                <div class="invalid-feedback">
+                  Campo Identificación es obligatorio.
+                </div>
               </div>
-            </div>
 
-            <div class="form-row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label for="rangoEdad"
-                    >Selecciona tu Rango de Edad:
-                    <strong> {{ age }}</strong></label
-                  >
+                <label for="rangoEdad">
+                  <i 
+                    class="bi bi-info-circle-fill"
+                    placement="top"
+                    ngbTooltip="Se refiere a la edad del paciente en años."
+                    ></i>
+                  Rango de Edad: <strong> {{ age }}</strong>
+                </label>
                   <input
                     type="range"
                     class="form-control"
@@ -61,13 +87,23 @@
                         form.get('age')?.invalid && form.get('age')?.touched
                     }"
                   />
+                  <div class="invalid-feedback">
+                    Campo edad es obligatorio.
+                  </div>
                 </div>
               </div>
 
-              <div class="form-group col-md-6">
-                <label for="inputMenopause">Menopausia</label>
+              <div class="col-md-6">
+                <label for="inputMenopause">
+                  <i 
+                    class="bi bi-info-circle-fill"
+                    placement="top"
+                    ngbTooltip="Se refiere al estado de la menopausia de la paciente en años."
+                    ></i>
+                  Menopausia
+                </label>
                 <select
-                  class="form-control"
+                  class="form-select"
                   id="inputMenopause"
                   formControlName="menopause"
                   [ngClass]="{
@@ -77,19 +113,24 @@
                   }"
                 >
                   <option value="premeno">Premenopausia</option>
-                  <option value="lt40">Menos de 40</option>
-                  <option value="ge40">Mayor o igual a 40</option>
+                  <option value="lt40">Menos de 40 años</option>
+                  <option value="ge40">Mayor o igual a 40 años</option>
                 </select>
+                <div class="invalid-feedback">
+                  Campo Menopausia es obligatorio.
+                </div>
               </div>
-            </div>
 
-            <div class="form-row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label for="tumorSize"
-                    >Selecciona el Tamaño del Tumor:
-                    <strong> {{ tumorSize }}</strong></label
-                  >
+                  <label for="tumorSize">
+                    <i 
+                      class="bi bi-info-circle-fill"
+                      placement="top"
+                      ngbTooltip="Se refiere al tamaño del tumor detectado en el paciente."
+                    ></i>
+                    Tamaño del Tumor: <strong> {{ tumorSize }}</strong>
+                  </label>
                   <input
                     type="range"
                     class="form-control"
@@ -102,15 +143,17 @@
                   />
                 </div>
               </div>
-            </div>
 
-            <div class="form-row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label for="rangoGanglios"
-                    >Selecciona el Estado de Ganglios Invasivos:
-                    <strong>{{ invNodes }}</strong></label
-                  >
+                  <label for="rangoGanglios">
+                    <i 
+                      class="bi bi-info-circle-fill mb-3" 
+                      placement="top" 
+                      ngbTooltip="Esta característica indica cuántos ganglios linfáticos están afectados o invadidos por las células cancerosas."
+                    ></i>
+                    Estado de Ganglios Invasivos: <strong>{{ invNodes }}</strong>
+                  </label>
                   <input
                     type="range"
                     class="form-control"
@@ -123,13 +166,18 @@
                   />
                 </div>
               </div>
-            </div>
 
-            <div class="form-row d-flex align-items-center">
-              <div class="form-group col-md-6">
-                <label for="nodecaps">Capas de Nodos</label>
+              <div class="col-md-6">
+                <label for="nodecaps">
+                  <i 
+                    class="bi bi-info-circle-fill" 
+                    placement="top" 
+                    ngbTooltip="Se refiere a si las cápsulas que rodean los nodos linfáticos están afectadas o no por el cáncer."
+                  ></i>
+                  Capas de Nodos
+                </label>
                 <select
-                  class="form-control"
+                  class="form-select"
                   id="nodecaps"
                   formControlName="nodecaps"
                   [ngClass]="{
@@ -141,11 +189,27 @@
                   <option value="yes">Sí</option>
                   <option value="no">No</option>
                 </select>
+                <div class="invalid-feedback">
+                  Campo Capas de nodos es obligatorio.
+                </div>
               </div>
-              <div class="form-group col-md-6">
-                <label for="degMalig">Grados Malignos</label>
+              <ng-template #tipContent>
+                Se refiere al grado de malignidad del tumor. Aquí hay una breve explicación de lo que podría significar:
+                <p>1: Indica un grado bajo de malignidad del tumor.</p>
+                <p>2: Indica un grado moderado de malignidad del tumor.</p>
+                <p>3: Indica un grado alto de malignidad del tumor.</p>
+              </ng-template>
+              <div class="col-md-6">
+                <label for="degMalig">
+                  <i 
+                    class="bi bi-info-circle-fill" 
+                    placement="top" 
+                    [ngbTooltip]="tipContent"
+                  ></i>
+                  Grados Malignos
+                </label>
                 <select
-                  class="form-control"
+                  class="form-select"
                   formControlName="degMalig"
                   id="degMalig"
                   [ngClass]="{
@@ -159,12 +223,18 @@
                   <option value="3">3</option>
                 </select>
               </div>
-            </div>
-            <div class="form-row d-flex align-items-center">
-              <div class="form-group col-md-6">
-                <label for="breast">mama</label>
+
+              <div class="col-md-6">
+                <label for="breast">
+                  <i 
+                    class="bi bi-info-circle-fill" 
+                    placement="top" 
+                    ngbTooltip="Se refiere al lado del pecho en el que se encuentra el tumor."
+                  ></i>
+                  mama
+                </label>
                 <select
-                  class="form-control"
+                  class="form-select"
                   id="breast"
                   formControlName="breast"
                   [ngClass]="{
@@ -175,11 +245,22 @@
                   <option value="left">Izquierda</option>
                   <option value="right">Derecha</option>
                 </select>
+                <div class="invalid-feedback">
+                  Campo mama es obligatorio.
+                </div>
               </div>
-              <div class="form-group col-md-6">
-                <label for="breastQuad">cuádriceps mamario</label>
+
+              <div class="col-md-6">
+                <label for="breastQuad">
+                  <i 
+                    class="bi bi-info-circle-fill mb-3" 
+                    placement="top" 
+                    ngbTooltip="Se refiere a la ubicación del tumor en el cuadrante del seno."
+                  ></i>
+                  Cuadrante mamario
+                </label>
                 <select
-                  class="form-control"
+                  class="form-select"
                   id="breastQuad"
                   formControlName="breastQuad"
                   [ngClass]="{
@@ -194,13 +275,23 @@
                   <option value="right_low">Derecha Abajo</option>
                   <option value="central">Central</option>
                 </select>
+                <div class="invalid-feedback">
+                  Campo Cuadrante mamario es obligatorio.
+                </div>
               </div>
-            </div>
+
             <div class="form-row">
-              <div class="form-group col-md-6 mb-5">
-                <label for="irradiat">Irradiado</label>
+              <div class="col-md-6">
+                <label for="irradiat">
+                  <i 
+                    class="bi bi-info-circle-fill"
+                    placement="top" 
+                    ngbTooltip="Se refiere a si el paciente ha recibido radioterapia."
+                  ></i>
+                  recibio Radioterapia?
+                </label>
                 <select
-                  class="form-control"
+                  class="form-select"
                   id="irradiat"
                   formControlName="irradiat"
                   [ngClass]="{
@@ -212,9 +303,12 @@
                   <option value="yes">Sí</option>
                   <option value="no">No</option>
                 </select>
+                <div class="invalid-feedback">
+                  Campo Radioterapia es obligatorio.
+                </div>
               </div>
 
-              <div class="form-check form-switch form-group col-md-6 mb-5">
+              <div class="form-check form-switch col-md-6 mb-5">
                 <input 
                 class="form-check-input" 
                 type="checkbox" 
@@ -225,7 +319,10 @@
                     form.get('saveResult')?.invalid &&
                     form.get('saveResult')?.touched
                 }" checked>
-                <label class="form-check-label" for="flexSwitchCheckChecked"> deseas Guardar el resultado?</label>
+                <label for="flexSwitchCheckChecked" class="form-check-label">
+                  <i class="bi bi-info-circle-fill mb-3" placement="top" ngbTooltip="Esto es para indicar si se quiere guardar la prediccion"></i>
+                  deseas Guardar el resultado?
+                </label> 
               </div>
             </div>
 
