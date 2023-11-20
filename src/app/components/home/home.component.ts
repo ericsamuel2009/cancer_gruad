@@ -18,11 +18,17 @@ export class HomeComponent implements OnInit {
   invNodes: string = '18-20';
   sugerencias_IA: string = '';
   public loading: boolean = false;
-
   ngOnInit() {
     //this.obtenerDatos(); 
   }
 
+  limitarLongitudMax() {
+    const maxLength = 10;
+    if (this.form.value.identificationcard && this.form.value.identificationcard.toString().length > maxLength) {
+      const newValue = parseInt(this.form.value.identificationcard.toString().substring(0, maxLength), 10);
+      this.form.get('identificationcard')?.setValue(newValue);
+    }
+  }
 
   obtenerDatos() {
     this.apiService.getData().subscribe(

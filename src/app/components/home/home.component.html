@@ -58,6 +58,7 @@
                       form.get('identificationcard')?.touched
                   }"
                   min="0"
+                  (input)="limitarLongitudMax()"
                 />
                 <div class="invalid-feedback">
                   Campo Identificación es obligatorio.
