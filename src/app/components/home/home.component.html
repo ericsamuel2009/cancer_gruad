@@ -382,11 +382,13 @@
                 Resultado: <strong>{{ resultConvert(datos.Resultado) }}</strong>
               </li>
             </ol>
-            <div class="spinner-grow" role="status" *ngIf="loading">
-              <span class="visually-hidden">Loading...</span>
-            </div>
             <strong>
               <p *ngIf="!loading" [innerHTML]="sugerencias_IA" [style.white-space]="'pre-line'"></p>
+              <div class="d-flex justify-content-center">
+                <div class="spinner-grow" role="status" *ngIf="loading">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </div>
             </strong
             >
           </div>
