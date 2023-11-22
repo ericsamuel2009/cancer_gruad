@@ -10,7 +10,7 @@ import { EventType } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
   @ViewChild('btnSubmit', { static: true }) submirBtn!: ElementRef;
-  datos:any = [];
+  datos:any = {};
   form: FormGroup;
   showModalButtonDisabled = true;
   age: string = '40-49';
@@ -18,8 +18,10 @@ export class HomeComponent implements OnInit {
   invNodes: string = '18-20';
   sugerencias_IA: string = '';
   public loading: boolean = false;
+  public show: boolean = false;
+  public autohide:boolean = true;
   ngOnInit() {
-    //this.obtenerDatos(); 
+
   }
 
   limitarLongitudMax() {
@@ -28,17 +30,6 @@ export class HomeComponent implements OnInit {
       const newValue = parseInt(this.form.value.identificationcard.toString().substring(0, maxLength), 10);
       this.form.get('identificationcard')?.setValue(newValue);
     }
-  }
-
-  obtenerDatos() {
-    this.apiService.getData().subscribe(
-      (data) => {
-        this.datos =data;
-      },
-      error => {
-        console.error('Error al obtener datos:', error);
-      }
-    );
   }
 
 
@@ -84,6 +75,7 @@ export class HomeComponent implements OnInit {
   onSubmit() {
     
     if (this.form.valid) {
+      this.datos = {}
     this.sugerencias_IA = '';
     const newJson = {
       fullname: this.form.value.fullname,
@@ -119,7 +111,7 @@ export class HomeComponent implements OnInit {
   }
   else {
     this.markFormGroupTouched(this.form);
-    alert('Por favor, complete todos los campos del formulario.');
+    //alert('Por favor, complete todos los campos del formulario.');
     this.showModalButtonDisabled = true;
     
   }
