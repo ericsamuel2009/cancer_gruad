@@ -12,10 +12,6 @@ export class RestService {
       'Content-Type': 'application/json'
     });
   }
-
-  getData(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/default`);
-  }
   
   postData(formData: any): Observable<any> {
    return this.http.post(`${this.apiUrl}/breastcancer/consult`, formData, { headers: this.headers });

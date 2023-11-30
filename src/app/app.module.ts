@@ -12,12 +12,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './components/home/home.component';
 import { RoutingModule } from './components/routing.module';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbTooltipModule, NgbPopoverModule, NgbToastModule  } from '@ng-bootstrap/ng-bootstrap';
+import { ModalComponent } from './components/modal/modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,
@@ -30,6 +32,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MatFormFieldModule,
     HttpClientModule,
     NgbModule,
+    NgbTooltipModule,
+    NgbPopoverModule,
+    NgbToastModule
     
   ],
   providers: [],
