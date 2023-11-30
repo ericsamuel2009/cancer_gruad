@@ -375,7 +375,9 @@
                 </label> 
               </div>
             </div>
-
+            <ngb-alert [type]="'danger'" (closed)="close()" *ngIf="showModal">
+              <strong>{{titulo}}</strong> {{description}}
+            </ngb-alert>
             <button 
               type="submit"
               class="btn btn-primary"

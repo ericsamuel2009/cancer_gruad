@@ -11,6 +11,7 @@ import { EventType } from '@angular/router';
 export class HomeComponent implements OnInit {
   @ViewChild('btnSubmit', { static: true }) submirBtn!: ElementRef;
   datos:any = {};
+  public typedText: string = '';
   form: FormGroup;
   showModalButtonDisabled = true;
   age: string = '40-49';
@@ -18,8 +19,10 @@ export class HomeComponent implements OnInit {
   invNodes: string = '18-20';
   sugerencias_IA: string = '';
   public loading: boolean = false;
-  public show: boolean = false;
+  public showModal: boolean = false;
   public autohide:boolean = true;
+  public description = "";
+  public titulo = "";
   ngOnInit() {
 
   }
@@ -72,10 +75,13 @@ export class HomeComponent implements OnInit {
     return EVENT_OR_NOT_EVENT[evento] || evento;
   }
   
+  close() {
+		this.showModal = false;
+	}
   onSubmit() {
     
     if (this.form.valid) {
-      this.datos = {}
+    this.datos = {}
     this.sugerencias_IA = '';
     const newJson = {
       fullname: this.form.value.fullname,
@@ -97,6 +103,9 @@ export class HomeComponent implements OnInit {
         console.log('Respuesta del servidor:', response);
         this.showModalButtonDisabled = false;
         if (response.status == 'error') {
+          this.showModal = true;
+          this.titulo = "Error";
+          this.description = "Ocurrio un error de servidor";
           //Modal error
           return
         }
@@ -112,10 +121,23 @@ export class HomeComponent implements OnInit {
   else {
     this.markFormGroupTouched(this.form);
     //alert('Por favor, complete todos los campos del formulario.');
+      this.showModal = true;
+      this.description = "Por favor, complete todos los campos del formulario.";
     this.showModalButtonDisabled = true;
     
   }
 
+  }
+
+  typeWriterEffect(text: string) {
+    let charIndex = 0;
+    const typingInterval = setInterval(() => {
+      this.sugerencias_IA = text.slice(0, charIndex);
+      charIndex++;
+      if (charIndex > text.length) {
+        clearInterval(typingInterval);
+      }
+    }, 10);
   }
 
   actualizarRangoEdad(event: any): void {
@@ -161,10 +183,12 @@ export class HomeComponent implements OnInit {
     this.apiService.chatgptService(params).subscribe( (response: any) => {
       this.loading = false;
       if (response.status != "OK") {
+        this.showModal = true;
+        this.description = "No se pudo cargar la sugerencia.";
         //MENSAJE DE ERROR QUE NO RESPONDIO CHATGPT
         return
       }
-      this.sugerencias_IA = response.respuesta;
+      this.typeWriterEffect(response.respuesta);
     })
     
   }
