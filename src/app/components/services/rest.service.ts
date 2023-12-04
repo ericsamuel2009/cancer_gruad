@@ -5,19 +5,19 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class RestService {
-  private apiUrl = 'http://localhost:8082/breastcancer'; 
-
-  constructor (private http:HttpClient) { }
-
-  getData(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/default`);
-  }
-  postData(formData: any): Observable<any> {
-    const headers = new HttpHeaders({
+  private apiUrl = 'http://localhost:8082';
+  public headers:any;
+  constructor (private http:HttpClient) { 
+     this.headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-    const url = `${this.apiUrl}`; 
+  }
+  
+  postData(formData: any): Observable<any> {
+   return this.http.post(`${this.apiUrl}/breastcancer/consult`, formData, { headers: this.headers });
+  }
 
-   return this.http.post(`${this.apiUrl}/consult`, formData, { headers: headers });
+  chatgptService(message: any) {
+    return this.http.post(`${this.apiUrl}/chatgpt/chat`, message, { headers: this.headers });
   }
 }
