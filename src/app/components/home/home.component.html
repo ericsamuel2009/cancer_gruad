@@ -4,10 +4,10 @@
     <div class="col-md-6">
       <div class="card">
         <div class="card-header">
-          <h2 class="mb-0">Prediccion de cancer de mama</h2>
+          <h2 class="mb-0">Cancer de mama</h2>
         </div>
         <div class="card-body">
-          <form [formGroup]="form" class="row g-3 needs-validation" (ngSubmit)="onSubmit()">
+          <form [formGroup]="form" class="row g-3 needs-validation" (ngSubmit)="compararRF()">
 
               <div class="col-md-6">
                 <label for="inputNombre">
@@ -381,6 +381,8 @@
             <button 
               type="submit"
               class="btn btn-primary"
+              data-bs-toggle="modal"
+              data-bs-target="exampleModal"
               #btnSubmit
               (mouseenter)="agregarAtributos()"
               (mouseleave)="quitarAtributos()">enviar</button>
@@ -416,6 +418,22 @@
           <div class="col-md-12">
             <ol class="list-group">
               <li class="list-group-item">
+                Resultado: <strong>{{ resultConvert(datos.Resultado) }}</strong>
+                <div>
+                  <span class="badge bg-primary btn btn-primary" *ngIf="!isClassifier" (click)="classifierToggle()">
+                    Mas Clasificadores
+                  </span>
+                  <span *ngIf="isClassifier">
+                    <p><i>Clasificador: </i> </p>
+                      <span class="badge bg-secondary btn btn-secondary" [class]="{'isActive': (jsonNecesited.classifierType == 'ramdomforest')}" (click)="compararRF()">Random forest</span> |
+                      <span class="badge bg-secondary btn btn-secondary" [class]="{'isActive': (jsonNecesited.classifierType == 'j48')}" (click)="compararJ48()">J48</span> | 
+                      <span class="badge bg-secondary btn btn-secondary" [class]="{'isActive': (jsonNecesited.classifierType == 'NaiveBayes')}" (click)="compararNB()">NaiveBayes</span> | 
+                      <span class="badge bg-secondary btn btn-secondary" [class]="{'isActive': (jsonNecesited.classifierType == 'ZeroR')}" (click)="compararZR()">ZeroR</span> |
+                      <span class="badge bg-danger btn btn-danger"  (click)="classifierToggle()">Cerrar</span> 
+                  </span>
+                </div>
+              </li>
+              <li class="list-group-item">
                 Correctas: <strong>{{ datos.correctas }}</strong>
               </li>
               <li class="list-group-item">
@@ -430,7 +448,8 @@
                 <strong>{{ datos.incorrectasPorcentaje }}</strong>
               </li>
               <li class="list-group-item">
-                Resultado: <strong>{{ resultConvert(datos.Resultado) }}</strong>
+                Clasificador utilizado:
+                <strong>{{jsonNecesited.classifierType}}</strong>
               </li>
             </ol>
             <strong>

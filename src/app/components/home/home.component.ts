@@ -11,7 +11,9 @@ import { EventType } from '@angular/router';
 export class HomeComponent implements OnInit {
   @ViewChild('btnSubmit', { static: true }) submirBtn!: ElementRef;
   datos:any = {};
+  public datosj48:any = {}
   public typedText: string = '';
+  public isClassifier:boolean = false;
   form: FormGroup;
   showModalButtonDisabled = true;
   age: string = '40-49';
@@ -23,10 +25,13 @@ export class HomeComponent implements OnInit {
   public autohide:boolean = true;
   public description = "";
   public titulo = "";
+  public jsonNecesited:any = {};
   ngOnInit() {
 
   }
-
+  classifierToggle() {
+    this.isClassifier = !this.isClassifier;
+  }
   limitarLongitudMax() {
     const maxLength = 10;
     if (this.form.value.identificationcard && this.form.value.identificationcard.toString().length > maxLength) {
@@ -38,18 +43,18 @@ export class HomeComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,  private apiService: RestService, private renderer: Renderer2) {
     this.form = this.formBuilder.group({
-      fullname: ['', Validators.required],
-      identificationcard: [null, Validators.required],
+      fullname: ['eric', Validators.required],
+      identificationcard: [1122222525, Validators.required],
       saveResult: [false],
       age: [''],
-      menopause: ['', Validators.required],
+      menopause: ['premeno', Validators.required],
       tumorSize: [''],
       invNodes: [''],
-      nodecaps: ['', Validators.required],
-      degMalig: ['', Validators.required],
-      breast: ['', Validators.required],
-      breastQuad: ['', Validators.required],
-      irradiat: ['', Validators.required],
+      nodecaps: ['yes', Validators.required],
+      degMalig: ['1', Validators.required],
+      breast: ['right', Validators.required],
+      breastQuad: ['left_low', Validators.required],
+      irradiat: ['yes', Validators.required],
     });
   }
 
@@ -69,8 +74,8 @@ export class HomeComponent implements OnInit {
 
   resultConvert(evento: EventType): String {
     const EVENT_OR_NOT_EVENT:any = {
-      "no-recurrence-events": "No tiene cancer de mama",
-      "recurrence-events": "Presenta Cancer de mama"
+      "no-recurrence-events": "No presentas eventos Recurrentes",
+      "recurrence-events": "Presenta eventos Recurrentes"
     }
     return EVENT_OR_NOT_EVENT[evento] || evento;
   }
@@ -78,12 +83,24 @@ export class HomeComponent implements OnInit {
   close() {
 		this.showModal = false;
 	}
-  onSubmit() {
-    
-    if (this.form.valid) {
-    this.datos = {}
-    this.sugerencias_IA = '';
-    const newJson = {
+  async compararJ48() {
+    this.jsonNecesited = await this.buildRequest('j48');
+    this.onSubmit();
+  }
+  async compararNB() {
+    this.jsonNecesited = await this.buildRequest('NaiveBayes');
+    this.onSubmit();
+  }
+  async compararZR() {
+    this.jsonNecesited = await this.buildRequest('ZeroR');
+    this.onSubmit();
+  }
+  async compararRF() {
+    this.jsonNecesited = await this.buildRequest('ramdomforest');
+    this.onSubmit();
+  }
+  buildRequest(classifier: String = "ramdomforest") {
+    return {
       fullname: this.form.value.fullname,
       identificationcard: this.form.value.identificationcard,
       saveResult: this.form.value.saveResult,
@@ -96,7 +113,16 @@ export class HomeComponent implements OnInit {
       breast:  this.form.value.breast,
       breastQuad:  this.form.value.breastQuad,
       irradiat: this.form.value.irradiat,
+		  classifierType: classifier
     };
+  }
+  onSubmit() {
+    
+    if (this.form.valid) {
+    this.datos = {}
+    this.sugerencias_IA = '';
+    const newJson:any = (Object.entries(this.jsonNecesited).length > 0 ) ? this.jsonNecesited : this.buildRequest();
+    console.log('Peticion:', Object.entries(this.jsonNecesited).length);
     this.showModalButtonDisabled = false;
     this.apiService.postData(newJson).subscribe(
       response => {
@@ -109,7 +135,8 @@ export class HomeComponent implements OnInit {
           //Modal error
           return
         }
-        this.datos = response;
+          this.datos = response;
+        // this.jsonNecesited = {};
       },
       error => {
         console.error('Error en la solicitud:', error);
